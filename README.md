@@ -1,98 +1,79 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Backend Moldeo Pro - API REST
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend NestJS con TypeORM y MySQL para el sistema de monitoreo de inyección de plástico.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🗄️ Tablas MySQL (Entidades TypeORM)
 
-## Description
+- **tbl_machine_status** - Estado del gemelo digital (OEE, tiempos de ciclo, salud de servos)
+- **tbl_injection_cycles** - Parámetros de inyección (temperatura husillo, fuerza cierre, presión)
+- **tbl_thermal_zones** - Zonas térmicas (husillo/molde)
+- **tbl_alerts_log** - Registro de alertas críticas y advertencias
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📡 Endpoints API
 
-## Project setup
+### Monitoring (`/monitoring`)
 
-```bash
-$ npm install
-```
+- `GET /monitoring/live` - Datos del gemelo digital en tiempo real
+- `GET /monitoring/diagnostics` - Diagnóstico de actuadores
 
-## Compile and run the project
+### Injection (`/injection`)
 
-```bash
-# development
-$ npm run start
+- `GET /injection/params` - Parámetros de proceso actual
+- `POST /injection/adjust` - Ajustar presión y velocidad
 
-# watch mode
-$ npm run start:dev
+### Alerts (`/alerts`)
 
-# production mode
-$ npm run start:prod
-```
+- `GET /alerts/active` - Alertas activas
+- `PUT /alerts/resolve/:id` - Marcar alerta como resuelta
 
-## Run tests
+### Temperature (`/temperature`)
+
+- `GET /temperature/zones` - Estado de zonas térmicas
+
+## ⚙️ Instalación
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
+## 🔧 Configuración
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Configurar archivo `.env`:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=tu_password
+DB_DATABASE=moldeo_pro
+PORT=3000
+```
+
+## 🚀 Ejecución
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Desarrollo
+npm run start:dev
+
+# Producción
+npm run build
+npm run start:prod
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 📦 Dependencias instaladas
 
-## Resources
+- `@nestjs/typeorm` - Integración TypeORM
+- `typeorm` - ORM para TypeScript
+- `mysql2` - Driver MySQL
+- `@nestjs/config` - Gestión de variables de entorno
+- `class-validator` - Validación de DTOs
+- `class-transformer` - Transformación de objetos
+- `node-opcua` - Comunicación OPC-UA
 
-Check out a few resources that may come in handy when working with NestJS:
+## 🔑 Características
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- ✅ TypeORM con sincronización automática de esquemas (solo dev)
+- ✅ CORS habilitado para React frontend (puerto 5173)
+- ✅ Validación global de DTOs
+- ✅ Logging de consultas SQL
+- ✅ Arquitectura modular (4 módulos principales)
