@@ -3,10 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MonitoringModule } from './monitoring/monitoring.module';
-import { InjectionModule } from './injection/injection.module';
-import { AlertsModule } from './alerts/alerts.module';
-import { ThermalModule } from './thermal/thermal.module';
+import { MonitoringModule } from './modules/monitoring/monitoring.module';
+import { InjectionModule } from './modules/injection/injection.module';
+import { AlertsModule } from './modules/alerts/alerts.module';
+import { ThermalModule } from './modules/thermal/thermal.module';
 
 @Module({
   imports: [
