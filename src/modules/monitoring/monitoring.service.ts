@@ -17,10 +17,22 @@ export class MonitoringService {
       order: { timestamp: 'DESC' },
     });
 
+    // Convertir el valor numérico de servosHealth a string
+    const servosHealthValue = latestStatus?.servosHealth || 0;
+    let servosHealthStatus: 'good' | 'warning' | 'critical';
+
+    if (servosHealthValue >= 90) {
+      servosHealthStatus = 'good';
+    } else if (servosHealthValue >= 70) {
+      servosHealthStatus = 'warning';
+    } else {
+      servosHealthStatus = 'critical';
+    }
+
     return {
       oee: latestStatus?.oeeGlobal || 0,
       cycleTime: latestStatus?.cycleTime || 0,
-      servosHealth: latestStatus?.servosHealth || 0,
+      servosHealth: servosHealthStatus,
       timestamp: latestStatus?.timestamp || new Date(),
     };
   }
