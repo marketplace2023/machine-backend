@@ -7,6 +7,7 @@ import { MonitoringModule } from './modules/monitoring/monitoring.module';
 import { InjectionModule } from './modules/injection/injection.module';
 import { AlertsModule } from './modules/alerts/alerts.module';
 import { ThermalModule } from './modules/thermal/thermal.module';
+import { MachinesModule } from './modules/machines/machines.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ThermalModule } from './modules/thermal/thermal.module';
     InjectionModule,
     AlertsModule,
     ThermalModule,
+    MachinesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
